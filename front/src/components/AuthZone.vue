@@ -141,7 +141,8 @@ export default {
 }
 .form .inp_textarea {
     min-height: 6em;
-    font-family: monospace;
+    font-family: Arial, sans-serif;
+    font-size: 1rem;
 }
 
 a[href^="https://github.com"]:before {
