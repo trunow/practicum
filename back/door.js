@@ -76,8 +76,18 @@ const door = (req, res) => {
                             text: `${process.env.APP_URL}/?auth=${user.id}~${token}`
                         }, 
                         (err, info) => {
-                            if (err) user = {"error": err.message};
-                            // else console.log('mail sent');
+                            if (err) {
+                                user = {"error": err.message};
+                            }
+                            else {
+                                // console.log('mail sent');
+                                user.id = 0;//null;// he is not auth yet
+                                user.token = undefined;
+                                user.info = info;
+                            }
+
+                            if (res) res.send({ user });
+                            else return user;
                         }
                     );
 
@@ -88,8 +98,33 @@ const door = (req, res) => {
                     user = {"error": "Not found user.email or .id"};
                 }
                 
-		        // res.send({ user });
-		        return user;
+		        if (res) res.send({ user });
+		        else return user;
+            }
+        );
+    }
+    else if (req.method === 'POST' && req.query.callback && req.user?.email) {
+        let user = req.user;
+
+        // send callback
+        mailer.sendMail(
+            {
+                from: user.email,
+                to: process.env.MAIL_FROM,
+                subject: '📯📭 from practicum.trunow',
+                text: req.query.callback
+            }, 
+            (err, info) => {
+                if (err) {
+                    user = {"error": err.message};
+                }
+                else {
+                    // console.log('callback sent');
+                    user.info = info;
+                }
+
+                if (res) res.send({ user });
+                else return user;
             }
         );
     }

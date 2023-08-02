@@ -33,7 +33,7 @@ export default {
                 this.$root.user = {};
                 window.localStorage.setItem('token', null);
                 
-                this.countdown = 28;
+                this.countdown = 8;
                 let timer = setInterval(() => {
                     if(this.countdown > 0) this.countdown--;
                     else {

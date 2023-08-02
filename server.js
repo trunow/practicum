@@ -26,10 +26,10 @@ app.get("/me", (req, res) => {
 });
 
 app.post("/me", (req, res) => {
-	if (req.user?.id) {
+	if (req.user?.id && !req.query.callback) {
 		res.send({ user: req.user, type: "silent" });
-	} else if (!req.query.email) {
-		res.send({ user: { error: "email" } });
+	} else if (!(req.query.email || req.user?.email)) {
+		res.send({ user: { error: "Wher is your email?" } });
 	} else {
 		door(req, res);
 		// res.send({ user: door(req) });

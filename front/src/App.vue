@@ -40,6 +40,7 @@ export default {
       
       if(queries['auth']) {
         this.token = queries['auth'];
+        this.hash = '#auth';
         
         // this.changeLocation(window.location.hash);
       }

@@ -3,7 +3,7 @@
     <input :value="x" type="hidden"/>
     <div class="cube" data-x="2" @transitionstart.self="rotating=true" @transitionend.self="rotating=false">
       <div class="cube__side">
-        <PrinterZone @end="toIam"/>
+        <PrinterZone @end="consoleClose"/>
       </div>
       <div class="cube__side">
         <IAm @why="roll(-1)"/>
@@ -53,8 +53,10 @@ export default {
   },
 
   methods: {
-    toIam() {
-      this.x = 2;
+    consoleClose() {
+      if(!this.$root.hash || this.$root.hash==='#why') {
+        this.x = 2;
+      }
       this.init = true;
       // this.$emit('init');
     },
